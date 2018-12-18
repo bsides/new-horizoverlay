@@ -1,16 +1,26 @@
 import React, { Component } from 'react'
-import Combatant from './Combatant'
+import Battlers from './Battlers'
 import Encounter from './Encounter'
+import ConfigWindow from './ConfigWindow'
+import Config from './Config'
 
 class App extends Component {
   state = {
     data: {
       Encounter: {},
-      Combatant: [],
+      battlers: [], // From ACT "Combatant"
       isActive: false
     },
-    isLocked: false
+    isLocked: false,
+    isConfigWindowOpen: false
   }
+  toggleConfigWindow = () => {
+    this.setState(prevState => ({
+      isConfigWindowOpen: !prevState.isConfigWindowOpen
+    }))
+  }
+  closeConfigWindow = () => this.setState({ isConfigWindowOpen: false })
+
   parseACTData(evt) {
     let arrBattlers = []
     const { Combatant: combatant } = evt.detail
@@ -22,7 +32,7 @@ class App extends Component {
       arrBattlers.push(newCombatant)
     }
     this.setState(prevState => ({
-      data: { ...prevState.data, Combatant: arrBattlers }
+      data: { ...prevState.data, battlers: arrBattlers }
     }))
   }
   componentDidMount() {
@@ -41,18 +51,25 @@ class App extends Component {
   componentWillUnmount() {
     document.removeEventListener('onOverlayDataUpdate', document)
     document.removeEventListener('onOverlayStateUpdate', document)
+    document.addEventListener('beforeunload', this.closeConfigWindow)
   }
   render() {
     console.log(this.state.data)
     const {
-      data: { Encounter: encounter, Combatant: battlers, isActive }
+      isConfigWindowOpen,
+      data: { Encounter: encounter, battlers }
     } = this.state
 
     return (
-      <>
-        <Combatant battlers={battlers} encounter={encounter} />
+      <div onContextMenu={this.toggleConfigWindow}>
+        <Battlers battlers={battlers} encounter={encounter} />
         <Encounter encounter={encounter} />
-      </>
+        {isConfigWindowOpen && (
+          <ConfigWindow closePopupWindow={this.closeConfigWindow}>
+            <Config />
+          </ConfigWindow>
+        )}
+      </div>
     )
   }
 }
