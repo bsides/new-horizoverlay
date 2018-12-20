@@ -1,13 +1,16 @@
-function getRandom(min, max) {
+function getRandom(min: number, max: number) {
   const first = Math.ceil(min)
   const last = Math.floor(max)
   return Math.floor(Math.random() * (last - first + 1)) + first
 }
 
 // Importing all images
-function importAll(r) {
-  let images = {}
-  r.keys().map((item, index) => (images[item.replace('./', '')] = r(item)))
+// TODO: Do I need to know all those types? Maybe.
+function importAll(r: any) {
+  let images: any = {}
+  r.keys().map(
+    (item: any, index: any) => (images[item.replace('./', '')] = r(item))
+  )
   return images
 }
 
@@ -232,11 +235,11 @@ const mockData = [
   }
 ]
 
-const mockDataStream = () => {
+const mockDataStream = (ran1 = 495, ran2 = 602) => {
   let Combatant = {
     YOU: {
-      ENCDPS: Math.floor(495 * Math.random()).toString(),
-      ENCHPS: Math.floor(602 * Math.random()).toString(),
+      ENCDPS: Math.floor(ran1 * Math.random()).toString(),
+      ENCHPS: Math.floor(ran2 * Math.random()).toString(),
       CritDirectHitCount: '2',
       CritDirectHitPct: '3%',
       DURATION: '153',
@@ -248,8 +251,8 @@ const mockDataStream = () => {
       misses: 0
     },
     'Other Person': {
-      ENCDPS: Math.floor(495 * Math.random()).toString(),
-      ENCHPS: Math.floor(602 * Math.random()).toString(),
+      ENCDPS: Math.floor(ran1 * Math.random()).toString(),
+      ENCHPS: Math.floor(ran2 * Math.random()).toString(),
       CritDirectHitCount: '2',
       CritDirectHitPct: '3%',
       DURATION: '153',
@@ -261,8 +264,8 @@ const mockDataStream = () => {
       misses: 0
     },
     'Someone Else': {
-      ENCDPS: Math.floor(495 * Math.random()).toString(),
-      ENCHPS: Math.floor(602 * Math.random()).toString(),
+      ENCDPS: Math.floor(ran1 * Math.random()).toString(),
+      ENCHPS: Math.floor(ran2 * Math.random()).toString(),
       CritDirectHitCount: '2',
       CritDirectHitPct: '3%',
       DURATION: '153',
@@ -281,8 +284,8 @@ const mockDataStream = () => {
     DURATION: '47',
     maxheal: 'YOU-Physick-790',
     maxhit: 'YOU-Wind Blade-2059',
-    encdps: Math.floor(495 * Math.random()).toString(),
-    enchps: Math.floor(602 * Math.random()).toString()
+    encdps: Math.floor(ran1 * Math.random()).toString(),
+    enchps: Math.floor(ran2 * Math.random()).toString()
   }
   return {
     Encounter,
