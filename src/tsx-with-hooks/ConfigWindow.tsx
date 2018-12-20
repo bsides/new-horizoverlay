@@ -1,9 +1,9 @@
-import React, { useState, useEffect, ReactChildren } from 'react'
+import React, { useState, useEffect, ReactNode } from 'react'
 import ReactDOM from 'react-dom'
 
 type ConfigWindowProps = {
   closePopupWindow(): void
-  children: ReactChildren
+  children: ReactNode
 }
 
 function ConfigWindow(props: ConfigWindowProps) {

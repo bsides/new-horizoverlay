@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useState, useEffect } from 'react'
 import Battlers from './Battlers'
-import Encounter from '../Encounter'
-import ConfigWindow from '../ConfigWindow'
-import Config from '../Config'
+import Encounter from './Encounter'
+import ConfigWindow from './ConfigWindow'
+import Config from './Config'
 
 // The ACT Plugin fire custom events
 // and we need to tell typescript to f* off <any>
@@ -20,11 +20,11 @@ declare global {
   }
 }
 
-interface AppState {
-  Encounter: {}
-  battlers: Array<{}> // From ACT "Combatant"
-  isActive: boolean
-}
+// interface AppState {
+//   Encounter: {}
+//   battlers: Array<{}> // From ACT "Combatant"
+//   isActive: boolean
+// }
 
 const App = () => {
   // const [data, setData] = useState<AppState>({

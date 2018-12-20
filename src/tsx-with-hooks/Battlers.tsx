@@ -10,7 +10,7 @@ import {
   PercentBarBG,
   PercentNumber
 } from './styled/Battlers'
-import { importAll } from '../helper'
+import { importAll } from './helper'
 
 // TODO: Discover this thing's type
 const images: any = importAll(
