@@ -14,7 +14,7 @@ import { importAll } from './helper'
 
 // TODO: Discover this thing's type
 const images: any = importAll(
-  require.context('./images', false, /\.(png|jpe?g|svg)$/)
+  require.context('../images', false, /\.(png|jpe?g|svg)$/)
 )
 
 interface BattlerType {

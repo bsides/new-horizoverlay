@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 import 'typeface-droid-sans'
-import ResizeImage from './images/handle.png'
+import ResizeImage from '../../images/handle.png'
 
 const GlobalStyle = createGlobalStyle`
   *,

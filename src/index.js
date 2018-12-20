@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
-import GlobalStyle from './GlobalStyle'
+import App from './tsx-with-hooks/App'
+import GlobalStyle from './tsx-with-hooks/styled/GlobalStyle'
 import * as serviceWorker from './serviceWorker'
 
 ReactDOM.render(

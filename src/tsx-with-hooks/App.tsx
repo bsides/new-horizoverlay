@@ -79,9 +79,10 @@ const App = () => {
 
   useEffect(initEventListeners, [])
 
-  console.log(encounter)
-  console.log(battlers)
-  console.log(isActive)
+  // console.log('encounter: ', encounter)
+  // console.log('battlers: ', battlers)
+  // console.table(battlers)
+  // console.log('isActive: ', isActive)
   return (
     <div onContextMenu={toggleConfigWindow}>
       <Battlers battlers={battlers} encounter={encounter} />
