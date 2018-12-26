@@ -236,7 +236,7 @@ const mockData = [
 ]
 
 const mockDataStream = (ran1 = 495, ran2 = 602) => {
-  let Combatant = {
+  const Combatant = {
     YOU: {
       ENCDPS: Math.floor(ran1 * Math.random()).toString(),
       ENCHPS: Math.floor(ran2 * Math.random()).toString(),
@@ -244,33 +244,98 @@ const mockDataStream = (ran1 = 495, ran2 = 602) => {
       CritDirectHitPct: '3%',
       DURATION: '153',
       damage: '61871',
-      'damage%': '100%',
+      'damage%': Math.floor(100 * Math.random()).toString() + '%',
       deaths: 0,
       maxhit: 'Wind Blade-2059',
       maxheal: 'Physick-790',
       misses: 0
     },
-    'Other Person': {
+    Cecil: {
       ENCDPS: Math.floor(ran1 * Math.random()).toString(),
       ENCHPS: Math.floor(ran2 * Math.random()).toString(),
       CritDirectHitCount: '2',
       CritDirectHitPct: '3%',
       DURATION: '153',
       damage: '61871',
-      'damage%': '100%',
+      'damage%': Math.floor(100 * Math.random()).toString() + '%',
       deaths: 0,
       maxhit: 'Wind Blade-2059',
       maxheal: 'Physick-790',
       misses: 0
     },
-    'Someone Else': {
+    Terra: {
       ENCDPS: Math.floor(ran1 * Math.random()).toString(),
       ENCHPS: Math.floor(ran2 * Math.random()).toString(),
       CritDirectHitCount: '2',
       CritDirectHitPct: '3%',
       DURATION: '153',
       damage: '61871',
-      'damage%': '100%',
+      'damage%': Math.floor(100 * Math.random()).toString() + '%',
+      deaths: 0,
+      maxhit: 'Wind Blade-2059',
+      maxheal: 'Physick-790',
+      misses: 0
+    },
+    Zidane: {
+      ENCDPS: Math.floor(ran1 * Math.random()).toString(),
+      ENCHPS: Math.floor(ran2 * Math.random()).toString(),
+      CritDirectHitCount: '2',
+      CritDirectHitPct: '3%',
+      DURATION: '153',
+      damage: '61871',
+      'damage%': Math.floor(100 * Math.random()).toString() + '%',
+      deaths: 0,
+      maxhit: 'Wind Blade-2059',
+      maxheal: 'Physick-790',
+      misses: 0
+    },
+    Tidus: {
+      ENCDPS: Math.floor(ran1 * Math.random()).toString(),
+      ENCHPS: Math.floor(ran2 * Math.random()).toString(),
+      CritDirectHitCount: '2',
+      CritDirectHitPct: '3%',
+      DURATION: '153',
+      damage: '61871',
+      'damage%': Math.floor(100 * Math.random()).toString() + '%',
+      deaths: 0,
+      maxhit: 'Wind Blade-2059',
+      maxheal: 'Physick-790',
+      misses: 0
+    },
+    Squall: {
+      ENCDPS: Math.floor(ran1 * Math.random()).toString(),
+      ENCHPS: Math.floor(ran2 * Math.random()).toString(),
+      CritDirectHitCount: '2',
+      CritDirectHitPct: '3%',
+      DURATION: '153',
+      damage: '61871',
+      'damage%': Math.floor(100 * Math.random()).toString() + '%',
+      deaths: 0,
+      maxhit: 'Wind Blade-2059',
+      maxheal: 'Physick-790',
+      misses: 0
+    },
+    Yuna: {
+      ENCDPS: Math.floor(ran1 * Math.random()).toString(),
+      ENCHPS: Math.floor(ran2 * Math.random()).toString(),
+      CritDirectHitCount: '2',
+      CritDirectHitPct: '3%',
+      DURATION: '153',
+      damage: '61871',
+      'damage%': Math.floor(100 * Math.random()).toString() + '%',
+      deaths: 0,
+      maxhit: 'Wind Blade-2059',
+      maxheal: 'Physick-790',
+      misses: 0
+    },
+    Cloud: {
+      ENCDPS: Math.floor(ran1 * Math.random()).toString(),
+      ENCHPS: Math.floor(ran2 * Math.random()).toString(),
+      CritDirectHitCount: '2',
+      CritDirectHitPct: '3%',
+      DURATION: '153',
+      damage: '61871',
+      'damage%': Math.floor(100 * Math.random()).toString() + '%',
       deaths: 0,
       maxhit: 'Wind Blade-2059',
       maxheal: 'Physick-790',
@@ -284,13 +349,27 @@ const mockDataStream = (ran1 = 495, ran2 = 602) => {
     DURATION: '47',
     maxheal: 'YOU-Physick-790',
     maxhit: 'YOU-Wind Blade-2059',
-    encdps: Math.floor(ran1 * Math.random()).toString(),
-    enchps: Math.floor(ran2 * Math.random()).toString()
+    ENCDPS: Math.floor(ran1 * Math.random()).toString(),
+    ENCHPS: Math.floor(ran2 * Math.random()).toString()
   }
   return {
     Encounter,
     Combatant,
     isActive: true
+  }
+}
+
+let customMockDataEvent = null
+const mockDataTimer = () => {
+  setInterval(() => {
+    customMockDataEvent = new CustomEvent('onOverlayDataUpdate', {
+      detail: mockDataStream()
+    })
+    document.dispatchEvent(customMockDataEvent)
+  }, 1000)
+  return function clearInterval() {
+    customMockDataEvent = null
+    document.removeEventListener('onOverlayDataUpdate', mockDataTimer)
   }
 }
 
@@ -300,5 +379,6 @@ export {
   getRandom,
   defaultConfig,
   mockDataStream,
-  importAll
+  importAll,
+  mockDataTimer
 }

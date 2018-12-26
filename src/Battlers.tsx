@@ -14,7 +14,7 @@ import { importAll } from './helper'
 
 // TODO: Discover this thing's type
 const images: any = importAll(
-  require.context('../images', false, /\.(png|jpe?g|svg)$/)
+  require.context('./images', false, /\.(png|jpe?g|svg)$/)
 )
 
 interface BattlerType {
@@ -45,7 +45,7 @@ const Battlers = (props: BattlersProps) => {
             <span>{battler.name}</span>
           </AboveBar>
           <InfoBar>
-            <img src={images(jobImage)} alt={battler.Job} />
+            <img src={images[jobImage]} alt={battler.Job} />
             <LeftInfo>
               {battler.ENCHPS || 0}
               <span>HPS</span>
@@ -66,7 +66,7 @@ const Battlers = (props: BattlersProps) => {
     })
     return battlers.length > 0 && toRender
   }
-  console.log(props.battlers)
+  // console.log(props.battlers)
   return (
     <>
       <BattlersStyled>{renderBattlers()}</BattlersStyled>

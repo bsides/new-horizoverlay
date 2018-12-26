@@ -1,8 +1,9 @@
-import React, { FunctionComponent, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Battlers from './Battlers'
 import Encounter from './Encounter'
 import ConfigWindow from './ConfigWindow'
 import Config from './Config'
+import { mockDataTimer } from './helper'
 
 // The ACT Plugin fire custom events
 // and we need to tell typescript to f* off <any>
@@ -20,36 +21,37 @@ declare global {
   }
 }
 
-// interface AppState {
-//   Encounter: {}
-//   battlers: Array<{}> // From ACT "Combatant"
-//   isActive: boolean
-// }
+interface AppState {
+  Encounter: {}
+  battlers: Array<{}> // From ACT "Combatant"
+  isActive: boolean
+}
 
 const App = () => {
-  // const [data, setData] = useState<AppState>({
-  //   Encounter: {},
-  //   battlers: [],
-  //   isActive: false
-  // })
-  const [encounter, setEncounter] = useState({})
-  const [battlers, setBattlers] = useState([] as Array<{}>)
-  const [isActive, setIsActive] = useState(false)
+  const [data, setData] = useState<AppState>({
+    Encounter: {},
+    battlers: [],
+    isActive: false
+  })
+  // const [encounter, setEncounter] = useState({})
+  // const [battlers, setBattlers] = useState([] as Array<{}>)
+  // const [isActive, setIsActive] = useState(false)
   const [isLocked, setIsLocked] = useState(false)
   const [isConfigWindowOpen, setIsConfigWindowOpen] = useState(false)
-  function toggleConfigWindow() {
+
+  const toggleConfigWindow = () =>
     setIsConfigWindowOpen(prevValue => !prevValue)
-  }
-  function closeConfigWindow() {
-    setIsLocked(false)
-  }
-  function toggleResizeWindowImage(evt: CustomEvent) {
+
+  const closeConfigWindow = () => setIsLocked(false)
+
+  const toggleResizeWindowImage = (evt: CustomEvent) => {
     setIsLocked(evt.detail.isLocked)
     isLocked
       ? document.documentElement.classList.remove('resizable')
       : document.documentElement.classList.add('resizable')
   }
-  function setACTPluginData(evt: CustomEvent) {
+
+  const setACTPluginData = (evt: CustomEvent) => {
     let arrBattlers: Array<{}> = []
     const { Combatant: combatant } = evt.detail
     for (let battler in combatant) {
@@ -59,12 +61,17 @@ const App = () => {
       }
       arrBattlers.push(newCombatant)
     }
-    // setData(prevValue => ({ ...prevValue, battlers: arrBattlers }))
-    setBattlers(arrBattlers)
-    setEncounter(evt.detail.Encounter)
-    setIsActive(evt.detail.isActive)
+    setData(prevValue => ({
+      ...prevValue,
+      ...evt.detail,
+      battlers: arrBattlers
+    }))
+    // setBattlers(arrBattlers)
+    // setEncounter(evt.detail.Encounter)
+    // setIsActive(evt.detail.isActive)
   }
-  function initEventListeners() {
+
+  const initEventListeners = () => {
     document.addEventListener('onOverlayDataUpdate', setACTPluginData)
     document.addEventListener('onOverlayStateUpdate', toggleResizeWindowImage)
     return function cleanupEventListeners() {
@@ -78,11 +85,14 @@ const App = () => {
   }
 
   useEffect(initEventListeners, [])
+  useEffect(mockDataTimer, [])
 
   // console.log('encounter: ', encounter)
   // console.log('battlers: ', battlers)
   // console.table(battlers)
   // console.log('isActive: ', isActive)
+  console.log(data)
+  const { battlers, Encounter: encounter } = data
   return (
     <div onContextMenu={toggleConfigWindow}>
       <Battlers battlers={battlers} encounter={encounter} />

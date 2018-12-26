@@ -25,19 +25,20 @@ type EncounterProps = {
   encounter: {
     title?: string
     CurrentZoneName?: string
+    duration?: string
+    ENCDPS?: string
   }
 }
 
 const Encounter = (props: EncounterProps) => {
-  const { title, CurrentZoneName } = props.encounter
+  // console.log(props.encounter)
+  const { title, CurrentZoneName, duration, ENCDPS } = props.encounter
   return (
     <>
       <TitleStyled>
-        <div>
-          {title && CurrentZoneName && `${title} @ ${CurrentZoneName}`}
-          {title && `${title}`}
-          {CurrentZoneName && `${CurrentZoneName}`}
-        </div>
+        <div>{title && CurrentZoneName && `${title} @ ${CurrentZoneName}`}</div>
+        <div>{ENCDPS} DPS</div>
+        <div>{duration}</div>
       </TitleStyled>
     </>
   )
